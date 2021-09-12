@@ -6,6 +6,7 @@ html {
 
 a {
     text-decoration: none;
+    color: #fff;
 }
 
 .light-rose-color, 
@@ -20,8 +21,9 @@ h1 {
 }
 
 #intro {
-    background-color: #EAECE0;
+    /* background-color: #EAECE0; */
     border-radius: 10px;
+    color: #FFF;
 }
 
 @media (max-width:768px) {
@@ -31,7 +33,7 @@ h1 {
 }
 
 #product {
-     background-color: #f1fbf4;
+     background-color:  #EAECE0;
 }
 
 .card {
@@ -41,4 +43,9 @@ h1 {
 
 img {
        border-radius: 15px 15px 0 0 !important;
+}
+
+#footer {
+    /* background-color: #000; */
+    color: #FFF;
 }
