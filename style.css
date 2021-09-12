@@ -4,6 +4,12 @@ html {
     font-family: 'Open Sans' sans-serif;
 }
 
+h1 {
+    font-family: 'Raleway', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
 a {
     text-decoration: none;
     color: #fff;
@@ -14,14 +20,7 @@ a {
     background-color: #F1E9F0;
 }
 
-h1 {
-    font-family: 'Raleway', sans-serif;
-    font-size: 2.5rem;
-    font-weight: 600;
-}
-
 #intro {
-    /* background-color: #EAECE0; */
     border-radius: 10px;
     color: #FFF;
 }
@@ -30,10 +29,6 @@ h1 {
     #intro {
         border-radius: 0 !important;
     }
-}
-
-#product {
-     background-color:  #EAECE0;
 }
 
 .card {
@@ -45,7 +40,14 @@ img {
        border-radius: 15px 15px 0 0 !important;
 }
 
+img:hover {
+    object-fit: cover;
+}
+
 #footer {
-    /* background-color: #000; */
     color: #FFF;
+}
+
+#footer .img-payment {
+    width: 130px;
 }
