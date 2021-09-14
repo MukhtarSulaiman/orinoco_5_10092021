@@ -49,6 +49,12 @@ img {
     width: 130px;
 }
 
+/* Product page */
+
+#main {
+    min-height: 53vh;
+}
+
 label {
     display: block;
     margin-bottom: 10px;
