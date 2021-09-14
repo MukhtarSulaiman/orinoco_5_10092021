@@ -1,33 +1,81 @@
+/** @format */
 
-fetch('http://localhost:3000/api/cameras')
-	.then((response) => {
-		if (response.ok) {
-			return response.json();
+let productId = new URL(location.href).searchParams.get('id');
+console.log(productId);
+
+fetch('http://localhost:3000/api/cameras/' + productId)
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
         } else {
-            alert('Oops problème de serveur ! :(');
-        }
+            document.getElementById('main')
+                .innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
+			// alert('Oops problème de serveur ! :(');
+		}
 	})
-    .then((data) => {
-        setProduct(data);
-        // console.log(value);
+	.then((data) => {
+		setProduct(data);
+		console.log(data);
 	})
 	.catch((error) => {
-		console.error();
-    });
+		console.log(error);
+	});
 
 
-const img_url = document.getElementById('img_url');
-const product_name = document.getElementById('product_name');
-const price = document.getElementById('price');
-const description = document.getElementById('description');
+// const img_url = document.getElementById('img_url');
+// const product_name = document.getElementById('product_name');
+// const price = document.getElementById('price');
+// const description = document.getElementById('description');
 
-// Sets product details 
+// Sets product details
 
-function setProduct(value) {
-    img_url.src = value[0].imageUrl;
-	product_name.innerHTML = value[0].name;
-    price.innerHTML = `Prix : ${value[0].price}€`;
-    description.innerHTML = value[0].description;
- }
-    
-    
+function setProduct(product) {
+	// console.log(product[0]._id);
+    const insertContent = document.getElementById('insertContent');
+	insertContent.innerHTML = `
+                        <div class="col-md-6">
+                            <img id="img_url" class="img-thumbnail h-100 h-rounded-0" src="${product.imageUrl}"  alt="...">
+                        </div>
+                        <div class=" col-12 col-md-6">
+                            <h1 id="product_name" class="mt-2">${product.name}</h1>
+                            <span id="price">${product.price}</span>
+                            <p id="description" class="mt-4 mt-xxl-5">${product.description}</p>
+                            <div class="row mt-xxl-5">
+                                <div class="col-12 col-sm-6">
+                                    <label for="quantité">Quantité :</label>
+                                    <select name="Quantité" id="quantité" class="">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-sm-6">
+                                    <label for="lentille">Lentille :</label>
+                                    <select name="lentille" id="lentille" class="">
+                                        <option value="${product.lenses[0]}">${product.lenses[0]}</option>
+                                        <option value="${product.lenses[1]}">${product.lenses[1]}</option>
+                                         <option value="${product.lenses[2]}">${product.lenses[2]}</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+
+	// for (let arr of product) {
+
+	//     console.log(arr.name);
+	//     console.log(product[1]);
+	// }
+
+	// main.innerHTML = ``;
+
+	// img_url.src = product[0].imageUrl;
+	// product_name.innerHTML = product[0].name;
+	// price.innerHTML = `Prix : ${product[0].price}€`;
+	// description.innerHTML = product[0].description;
+}
