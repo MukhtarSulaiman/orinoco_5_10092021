@@ -23,10 +23,10 @@ fetch( url + '/' + productId)
     
 
 // Sets product details
+let btn = `<button id="addToBasket" type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>`;
 
 function setProduct(product) {
-
-    const insertContent = document.getElementById('insertContent');
+	const insertContent = document.getElementById('insertContent');
 	insertContent.innerHTML = `
                         <div class="col-md-6">
                             <img id="img_url" class="img-thumbnail h-100 h-rounded-0" src="${product.imageUrl}"  alt="...">
@@ -47,14 +47,37 @@ function setProduct(product) {
                                     <select name="lentille" id="lenses" class=""></select>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>
+                                    <button id="addToBasket" type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>
                                 </div>
                             </div>
                         </div>
                         `;
-    
+
 	for (let arr of product.lenses) {
-        document.getElementById('lenses')
-            .innerHTML += `<option value="${arr}">${arr}</option>`;
+		document.getElementById(
+			'lenses'
+		).innerHTML += `<option value="${arr}">${arr}</option>`;
 	}
+
+	let addToBasket = document.getElementById('addToBasket');
+
+	addToBasket.addEventListener('click', () => {
+		// console.log('added to basket');
+
+        basketNumber()
+	});
 }
+
+
+
+function basketNumber() {
+
+    let productNumber = localStorage.getItem('basketNumber');
+    productNumber = parseInt(productNumber);
+
+    console.log(productNumber);     
+
+    localStorage.setItem('basketNumber', 1);
+    
+}
+
