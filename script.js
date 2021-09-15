@@ -33,7 +33,7 @@ function setProduct(product) {
                         </div>
                         <div class=" col-12 col-md-6">
                             <h1 id="product_name" class="mt-2">${product.name}</h1>
-                            <span id="price">${product.price}</span>
+                            <span id="price">${product.price} €</span>
                             <p id="description" class="mt-4 mt-xxl-5">${product.description}</p>
                             <div class="row mt-xxl-5">
                                 <div class="col-12 col-sm-6">
