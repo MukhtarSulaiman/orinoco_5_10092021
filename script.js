@@ -15,69 +15,90 @@ fetch( url + '/' + productId)
 	})
 	.then((data) => {
 		setProduct(data);
-		// console.log(data);
 	})
 	.catch((error) => {
 		console.log(error);
     });
     
 
+const imgContain = document.getElementById('imgContain');
+const productName = document.getElementById('productName');
+const price = document.getElementById('price');
+const description = document.getElementById('description');
+
+ 
 // Sets product details
-let btn = `<button id="addToBasket" type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>`;
-
+ 
 function setProduct(product) {
-	const insertContent = document.getElementById('insertContent');
-	insertContent.innerHTML = `
-                        <div class="col-md-6">
-                            <img id="img_url" class="img-thumbnail h-100 h-rounded-0" src="${product.imageUrl}"  alt="...">
-                        </div>
-                        <div class=" col-12 col-md-6">
-                            <h1 id="product_name" class="mt-2">${product.name}</h1>
-                            <span id="price">${product.price} €</span>
-                            <p id="description" class="mt-4 mt-xxl-5">${product.description}</p>
-                            <div class="row mt-xxl-5">
-                                <div class="col-12 col-sm-6">
-                                    <label for="quantité">Quantité :</label>
-                                    <select name="Quantité" id="quantité" class="">
-                                        <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <label for="lentille">Lentille :</label>
-                                    <select name="lentille" id="lenses" class=""></select>
-                                </div>
-                                <div class="d-flex justify-content-center">
-                                    <button id="addToBasket" type="button" class="btn btn btn-primary btn-lg mt-4 mt-xl-5 btn-add">Ajouter au pannier</button>
-                                </div>
-                            </div>
-                        </div>
-                        `;
 
-	for (let arr of product.lenses) {
-		document.getElementById(
-			'lenses'
-		).innerHTML += `<option value="${arr}">${arr}</option>`;
+    let img = document.createElement('img');
+	img.src = `${product.imageUrl}`;
+	img.classList.add('img-thumbnail', 'h-100', 'h-rounded-0');
+    imgContain.appendChild(img);
+    
+    productName.innerText = `${product.name}`;
+    description.innerText = `${product.description}`;
+
+    // Adds a comma before the last two numbers
+    let floatingPointNum = `${product.price}`.substring(0, `${product.price}`.length - 2) + ',' + `${product.price}`.substring(`${product.price}`.length - 2);
+    price.innerText = floatingPointNum + " €";
+
+
+    for (let arr of product.lenses) {
+     document.getElementById('lenses')
+        .innerHTML += `<option value="${arr}">${arr}</option>`;
+    }
+
+    customizingElements();
+		
+}
+
+
+
+
+function customizingElements() {
+	const quantityTitle = document.getElementById('quantityTitle');
+	const lensesTitle = document.getElementById('lensesTitle');
+	const option = document.getElementById('option');
+	const button = document.getElementById('button');
+
+	quantityTitle.innerText = 'Quantité :';
+	lensesTitle.innerText = 'Lentille :';
+
+	let btn = document.createElement('button');
+	btn.setAttribute('id', 'addToBasket');
+	btn.classList.add(
+		'btn',
+		'btn',
+		'btn-primary',
+		'btn-lg',
+		'mt-4',
+		'mt-xl-5',
+		'btn-add'
+	);
+	button.appendChild(btn).innerText = 'Ajouter au pannier';
+
+	for (let i = 5; i > 1; i--) {
+		option.insertAdjacentHTML(
+			'afterend',
+			`<option value="${i}">${i}</option>`
+		);
 	}
 
-	let addToBasket = document.getElementById('addToBasket');
-
+    let addToBasket = document.getElementById('addToBasket');
+    console.log(addToBasket)
 	addToBasket.addEventListener('click', () => {
 		// console.log('added to basket');
 
-        basketNumber()
+		basketNumber();
 	});
+
+	function basketNumber() {
+		let productNumber = localStorage.getItem('basketNumber');
+		productNumber = parseInt(productNumber);
+
+		console.log(productNumber);
+
+		localStorage.setItem('basketNumber', 1);
+	}
 }
-
-
-
-function basketNumber() {
-
-    let productNumber = localStorage.getItem('basketNumber');
-    productNumber = parseInt(productNumber);
-
-    console.log(productNumber);     
-
-    localStorage.setItem('basketNumber', 1);
-    
-}
-
