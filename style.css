@@ -15,8 +15,7 @@ a {
     color: #fff;
 }
 
-.light-rose-color, 
-.card {
+.light-rose-color{
     background-color: #F1E9F0;
 }
 
@@ -31,9 +30,24 @@ a {
     }
 }
 
-.card {
-    border-radius: 15px !important;
-    margin: 10px !important;
+.card-body  {
+    background-color: #F1E9F0;
+    border-bottom-left-radius: 15px;
+     border-bottom-right-radius: 15px;
+    
+}
+
+@media (max-width:992px) and (min-width: 576px) {
+    .card-body {
+         height: 155px !important; 
+         position: relative;
+    }
+    .details-btn {
+        float: none !important;
+        position: absolute;
+        right: 10px !important;
+        bottom: 15px !important;
+    }
 }
 
 img {
