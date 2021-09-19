@@ -83,3 +83,9 @@ select {
     width: 100% !important;
     
 }
+.numItems1,
+.numItems2 {
+    top: -4px;
+    font-size: 14px;
+    text-align: center;
+}
