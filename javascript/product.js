@@ -31,7 +31,6 @@ const price = document.getElementById('price');
 const description = document.getElementById('description');
 
 // Sets product details
-
 function setProduct(product) {
 
 	let img = document.createElement('img');
@@ -62,12 +61,12 @@ function setProduct(product) {
 const quantityTitle = document.getElementById('quantityTitle');
 const lensesTitle = document.getElementById('lensesTitle');
 const option = document.getElementById('option');
-const numItemsOnPageProduct = document.querySelector('.addToBasketOnPageProduct');
+const addToBasketOnPageProduct = document.querySelector('.addToBasketOnPageProduct');
 
 function customizingElements(product) {
 	quantityTitle.innerText = 'Quantité :';
 	lensesTitle.innerText = 'Lentille :';
-	numItemsOnPageProduct.innerText = 'Ajouter au pannier';
+	addToBasketOnPageProduct.innerText = 'Ajouter au pannier';
 
 	for (let i = 5; i > 1; i--) {
 		option.insertAdjacentHTML(
@@ -75,6 +74,11 @@ function customizingElements(product) {
 			`<option value="${i}">${i}</option>`
 		);
 	}
+
+
+	addToBasketOnPageProduct.addEventListener('click', () => {
+		basketNumber(product);
+	});
 }
 
 
@@ -92,12 +96,11 @@ function hideNumItemsOnToggler() {
 }
 
 
-numItemsOnPageProduct.addEventListener('click', () => {
-	basketNumber();
-});
 
-// Sets the intial value of locaStrage
-function basketNumber() {
+// Sets the intial value of locaStrage 
+// Shows the number of available items on the screen
+function basketNumber(product) {
+
 	let productNumber = localStorage.getItem('basketNumber');
 	productNumber = parseInt(productNumber);
 
@@ -110,6 +113,8 @@ function basketNumber() {
 		numItems1.innerText = 1;
 		numItems2.innerText = 1;
 	}
+
+	itemAdded(product);
 }
 
 
@@ -123,6 +128,25 @@ function onLoadBasketNumber() {
 	}
 }
 onLoadBasketNumber();
+
+
+function itemAdded(product) {
+	console.log('Function items ');
+	console.log(product);
+
+	let basketItems = localStorage.getItem('basketItems');
+	basketItems = JSON.parse(basketItems)
+
+	if (basketItems =! null) {
+		console.log(localStorage.setItem('basketItems', basketItems = basketItems + basketItems));
+	} else {
+		localStorage.setItem('basketItems', JSON.stringify(product));
+	}
+
+
+
+
+}
 
 
 
