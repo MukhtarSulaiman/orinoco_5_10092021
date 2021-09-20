@@ -12,15 +12,16 @@ function hideNumItemsOnToggler() {
 	if (numItems1 != onblur) {
 		numItems1.style.display = 'none';
 	} else {
+		// has to be reviwed !
 		numItems1.style.display = 'initial !important';
 	}
 }
 
-document.querySelector('.addToBasketOnPageProduct')
-addEventListener('click', () => {
-	// console.log('Working is ...')
-	// alert('This is an alert !')
-})
+// document.querySelector('.addToBasketOnPageProduct')
+// addEventListener('click', () => {
+// 	// console.log('Working is ...')
+// 	// alert('This is an alert !')
+// })
 
 
 const thead = document.querySelector('.thead');
@@ -36,7 +37,9 @@ const product_lenses = document.getElementById('product_lenses');
 const total_amount = document.getElementById('total_amount');
 
 // Set table's components and the remove btn
- function setProductTable() {
+function showProduct() {
+	 
+	
 
 	thead.innerHTML = `<tr><th scope="col">Nom</th><th scope="col">Quantité</th><th scope="col">Prix</th><th scope="col">Lentille</th> </tr>`;
 	tbody.innerHTML = `<tr><td id="product_name">Zurss</td><td id="product_quantity">1</td><td id="product_price">49900 €</td><td id="product_lenses">35mm 1.4</td></tr>`;
@@ -47,6 +50,8 @@ const total_amount = document.getElementById('total_amount');
 	removeButton.innerHTML = `Suprimer ` + `<i class="bi bi-trash"></i>`;
 
 }
-setProductTable()
+showProduct()
+
+
 
 // export {hideNumItemsOnToggler, setProductTable}
