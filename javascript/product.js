@@ -90,6 +90,7 @@ function hideNumItemsOnToggler() {
 	if (numItems1 != onblur) {
 		numItems1.style.display = 'none';
 	} else {
+		// has to be reviwed !
 		numItems1.style.display = 'initial !important';
 	}	
 
@@ -98,7 +99,7 @@ function hideNumItemsOnToggler() {
 
 
 // Sets the intial value of locaStrage 
-// Shows the number of available items on the screen
+// Shows the number of available items on the header 
 function basketNumber(product) {
 
 	let productNumber = localStorage.getItem('basketNumber');
@@ -118,7 +119,7 @@ function basketNumber(product) {
 }
 
 
-// Sets the value of the locaStorage to basket
+// Sets the value of the locaStorage to basket when loading the page
 function onLoadBasketNumber() {
 	
 	let productNumber = localStorage.getItem('basketNumber');
@@ -131,22 +132,30 @@ onLoadBasketNumber();
 
 
 function itemAdded(product) {
-	console.log('Function items ');
-	console.log(product);
 
-	let basketItems = localStorage.getItem('basketItems');
+	product.quantity = 0;
+
+	let basketItems = localStorage.getItem('basketItems')
 	basketItems = JSON.parse(basketItems)
 
-	if (basketItems =! null) {
-		console.log(localStorage.setItem('basketItems', basketItems = basketItems + basketItems));
+	if (basketItems != null) {
+		if (basketItems[product._id] == undefined) {
+			basketItems = {
+			...basketItems,
+				[product._id]: product
+			}
+		}
+		basketItems[product._id].quantity += 1;
+		// console.log(basketItems[product._id]);
 	} else {
-		localStorage.setItem('basketItems', JSON.stringify(product));
+		product.quantity = 1;
+		basketItems = {
+			[product._id]: product
+		}
 	}
-
-
-
-
+	
+	localStorage.setItem('basketItems', JSON.stringify(basketItems));
+	
 }
 
-
-
+// export { basketNumber, onLoadBasketNumber}
