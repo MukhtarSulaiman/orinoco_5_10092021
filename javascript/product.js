@@ -77,7 +77,8 @@ function customizingElements(product) {
 
 
 	addToBasketOnPageProduct.addEventListener('click', () => {
-		basketNumber(product);
+		setBasketNumber(product);
+
 	});
 }
 
@@ -100,7 +101,7 @@ function hideNumItemsOnToggler() {
 
 // Sets the intial value of locaStrage 
 // Shows the number of available items on the header 
-function basketNumber(product) {
+function setBasketNumber(product) {
 
 	let productNumber = localStorage.getItem('basketNumber');
 	productNumber = parseInt(productNumber);
@@ -115,7 +116,7 @@ function basketNumber(product) {
 		numItems2.innerText = 1;
 	}
 
-	itemAdded(product);
+	setItemAdded(product);
 }
 
 
@@ -131,7 +132,7 @@ function onLoadBasketNumber() {
 onLoadBasketNumber();
 
 
-function itemAdded(product) {
+function setItemAdded(product) {
 
 	product.quantity = 0;
 
