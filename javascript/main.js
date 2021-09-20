@@ -1,4 +1,4 @@
-
+// Retreiving data from the API
 async function fetchData() {
 
     try {
@@ -26,7 +26,7 @@ let numItems2 = document.querySelector('.numItems2');
 numItems1.innerText = localStorage.getItem('basketNumber');
 numItems2.innerText = localStorage.getItem('basketNumber');
 
-
+// Hides Items number on the toggler button
 function hideNumItemsOnToggler() {
 
 	if (numItems1 != onblur) {
@@ -37,14 +37,12 @@ function hideNumItemsOnToggler() {
 
 }
 
-// const sub_heading = document.getElementById('sub_heading');
-// const product_img = document.getElementById('product_img');
-// const product_name = document.getElementById('product_name');
-// const product_price = document.getElementById('product_price');
 
+// Shows all products on the main page
 
-// console.log(product_details);
 function showProductList(data) {
+
+	const sub_heading = document.getElementById('sub_heading');
 	sub_heading.innerText = 'Nos produits';
 
 	for (let i = 0; i < data.length; i++) {
