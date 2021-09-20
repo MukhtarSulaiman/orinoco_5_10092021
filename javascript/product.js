@@ -117,13 +117,13 @@ function setBasketNumber(product) {
 
 	setItemAdded(product);
 }
-
+// Sets the product itself 
 function setItemAdded(product) {
 
 	product.quantity = 0;
 
-	let basketItems = localStorage.getItem('basketItems')
-	basketItems = JSON.parse(basketItems)
+	let basketItems = localStorage.getItem('basketItems');
+	basketItems = JSON.parse(basketItems);
 
 	if (basketItems != null) {
 		if (basketItems[product.name] == undefined) {
@@ -145,12 +145,13 @@ function setItemAdded(product) {
 
 // Sets the total price of items
 function setTotalCost(price) {
-
+	
 	let totalCost = localStorage.getItem('totalCost');
-	totalCost = JSON.parse(totalCost)
+	totalCost = JSON.parse(totalCost);
+	
 	// console.log(totalCost)
 	if (totalCost != null) {
-		localStorage.setItem('totalCost', totalCost+= price);
+		localStorage.setItem('totalCost', totalCost += price);
 	} else {
 		localStorage.setItem('totalCost', price);
 	}
