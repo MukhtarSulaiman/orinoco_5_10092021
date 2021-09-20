@@ -23,35 +23,58 @@ function hideNumItemsOnToggler() {
 // 	// alert('This is an alert !')
 // })
 
+const row = document.querySelector('.row')
 
-const thead = document.querySelector('.thead');
-const tbody = document.querySelector('.tbody');
-const tfoot = document.querySelector('.tfoot');
-
-
-const product_img = document.getElementById('product_img');
-const product_name = document.getElementById('product_name');
-const product_quantity = document.getElementById('product_quantity');
-const product_price = document.getElementById('product_price');
-const product_lenses = document.getElementById('product_lenses');
-const total_amount = document.getElementById('total_amount');
+const tr1 = document.querySelector('.tr1');
+const tr2 = document.querySelector('.tr2');
+const tr3 = document.querySelector('.tr3');
 
 // Set table's components and the remove btn
 function showProduct() {
-	 
 	
+	let basketItems = localStorage.getItem('basketItems');
+	basketItems = JSON.parse(basketItems);
 
-	thead.innerHTML = `<tr><th scope="col">Nom</th><th scope="col">Quantité</th><th scope="col">Prix</th><th scope="col">Lentille</th> </tr>`;
-	tbody.innerHTML = `<tr><td id="product_name">Zurss</td><td id="product_quantity">1</td><td id="product_price">49900 €</td><td id="product_lenses">35mm 1.4</td></tr>`;
-	tfoot.innerHTML = `<tr><td class="text-info">Total</td><td></td><td></td><td id="total_amount" class="text-info">49900 €</td></tr>`;
-	
-	let removeButton = document.getElementById('removeButton');
-	removeButton.classList.add('btn-danger');
-	removeButton.innerHTML = `Suprimer ` + `<i class="bi bi-trash"></i>`;
+	console.log(basketItems);
+
+	if (basketItems && row) {
+		// row.innerHTML = "";
+		Object.values(basketItems).map(item => {
+
+			row.innerHTML +=
+				`<div class="col-12 col-md-3 mt-3 mx-sm-0 mx-0 text-center">
+                        <img class="rounded-0" src="${item.imageUrl}" height="112" alt="">
+                    </div>
+                    <div class="col-12 col-md-9 my-4 mt-md-0">
+                        <table class="table text-center mb-1">
+                            <thead>
+                                <tr><th scope="col">Nom</th><th scope="col">Quantité</th><th scope="col">Prix</th><th scope="col">Lentille</th> </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>${item.name}</td><td>${item.quantity}</td><td>${item.price} €</td><td>${item.lenses[0]}</td></tr>
+                            <tfoot>
+                                <tr><td class="text-info">Total</td><td></td><td></td><td class="text-info">${item.quantity * item.price} €</td></tr>
+                            </tfoot>
+                        </table>
+                        <div class="d-flex justify-content-center justify-content-md-end">
+                            <button id="removeButton" type="button" class="btn btn-danger p-1"> Suprimer<i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>`;
+		});
+	} else {
+		row.innerHTML = `<h2 class="text-center text-secondary">Votre panier est vide !<a href="index.html" class="text-info"> Retour à l'accueil</a></h2>`;
+	}
+
+	let totalCost = localStorage.getItem('totalCost')
+
+	row.innerHTML += `
+		<div class=" mt-5 d-flex justify-content-between text-center border-top border-dark">
+			<div class="text-secondary"><h4>Total de la commande :</h4></div>
+			<div class="fs-5 text-info"><p>${totalCost} €</p></div>
+		</div>
+	`;
 
 }
 showProduct()
-
-
 
 // export {hideNumItemsOnToggler, setProductTable}
