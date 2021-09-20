@@ -32,6 +32,7 @@ function hideNumItemsOnToggler() {
 	if (numItems1 != onblur) {
 		numItems1.style.display = 'none';
 	} else {
+		// has to be reviwed !
 		numItems1.style.display = 'initial !important';
 	}	
 
