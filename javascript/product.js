@@ -78,7 +78,7 @@ function customizingElements(product) {
 
 	addToBasketOnPageProduct.addEventListener('click', () => {
 		setBasketNumber(product);
-
+		setTotalCost(product.price);
 	});
 }
 
@@ -94,7 +94,6 @@ function hideNumItemsOnToggler() {
 		// has to be reviwed !
 		numItems1.style.display = 'initial !important';
 	}	
-
 }
 
 
@@ -119,6 +118,44 @@ function setBasketNumber(product) {
 	setItemAdded(product);
 }
 
+function setItemAdded(product) {
+
+	product.quantity = 0;
+
+	let basketItems = localStorage.getItem('basketItems')
+	basketItems = JSON.parse(basketItems)
+
+	if (basketItems != null) {
+		if (basketItems[product.name] == undefined) {
+			basketItems = {
+			...basketItems,
+				[product.name]: product
+			}
+		}
+		basketItems[product.name].quantity += 1;
+		// console.log(basketItems[product.name]);
+	} else {
+		product.quantity = 1;
+		basketItems = {
+			[product.name]: product
+		}
+	}	
+	localStorage.setItem('basketItems', JSON.stringify(basketItems));	
+}
+
+// Sets the total price of items
+function setTotalCost(price) {
+
+	let totalCost = localStorage.getItem('totalCost');
+	totalCost = JSON.parse(totalCost)
+	// console.log(totalCost)
+	if (totalCost != null) {
+		localStorage.setItem('totalCost', totalCost+= price);
+	} else {
+		localStorage.setItem('totalCost', price);
+	}
+}
+
 
 // Sets the value of the locaStorage to basket when loading the page
 function onLoadBasketNumber() {
@@ -131,32 +168,5 @@ function onLoadBasketNumber() {
 }
 onLoadBasketNumber();
 
-
-function setItemAdded(product) {
-
-	product.quantity = 0;
-
-	let basketItems = localStorage.getItem('basketItems')
-	basketItems = JSON.parse(basketItems)
-
-	if (basketItems != null) {
-		if (basketItems[product._id] == undefined) {
-			basketItems = {
-			...basketItems,
-				[product._id]: product
-			}
-		}
-		basketItems[product._id].quantity += 1;
-		// console.log(basketItems[product._id]);
-	} else {
-		product.quantity = 1;
-		basketItems = {
-			[product._id]: product
-		}
-	}
-	
-	localStorage.setItem('basketItems', JSON.stringify(basketItems));
-	
-}
 
 // export { basketNumber, onLoadBasketNumber}
