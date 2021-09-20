@@ -66,14 +66,14 @@ function showProduct() {
 	}
 
 	let totalCost = localStorage.getItem('totalCost')
-
-	row.innerHTML += `
-		<div class=" mt-5 d-flex justify-content-between text-center border-top border-dark">
+	if (totalCost) {
+		row.innerHTML +=
+		`<div class=" mt-5 d-flex justify-content-between text-center border-top border-dark">
 			<div class="text-secondary"><h4>Total de la commande :</h4></div>
 			<div class="fs-5 text-info"><p>${totalCost} €</p></div>
 		</div>
-	`;
-
+		`;
+	}
 }
 showProduct()
 
