@@ -57,6 +57,7 @@ const lensesTitle = document.getElementById('lensesTitle');
 const quantity = document.getElementById('quantity');
 const addItemsToBasket = document.querySelector('.addItemsToBasket');
 
+
 function customizingElements(product) {
 	quantityTitle.innerText = 'Quantité :';
 	lensesTitle.innerText = 'Lentille :';
@@ -79,15 +80,6 @@ function customizingElements(product) {
 }
 
 
-let valueSelected = 0;
-// console.log(quantity)
-// Gets the value of selected option
-function getOptionValue() {
-	valueSelected = quantity.value;
-	console.log(valueSelected);
-}
-
-
 const numItems1 = document.querySelector('.numItems1');
 const numItems2 = document.querySelector('.numItems2');
 
@@ -102,6 +94,15 @@ function hideNumItemsOnToggler() {
 }
 
 
+let valueSelected = 1;
+
+// It's an eventListenr that gets the value of a selected option
+function getOptionValue(event) {
+
+	valueSelected = quantity.value;
+	valueSelected = parseInt(valueSelected);
+}
+
 
 // Sets the intial value of locaStrage 
 // Shows the number of available items on the header 
@@ -111,13 +112,14 @@ function setBasketNumber(product) {
 	productNumber = parseInt(productNumber);
 
 	if (productNumber) {
-		localStorage.setItem('basketNumber', productNumber + 1);
-		numItems1.innerText = productNumber + 1;
-		numItems2.innerText = productNumber + 1;
+			localStorage.setItem('basketNumber', productNumber += valueSelected);
+			numItems1.innerText = productNumber;
+			numItems2.innerText = productNumber;
+		
 	} else {
-		localStorage.setItem('basketNumber', 1);
-		numItems1.innerText = 1;
-		numItems2.innerText = 1;
+		localStorage.setItem('basketNumber', valueSelected);
+			numItems1.innerText = valueSelected;
+			numItems2.innerText = valueSelected;
 	}
 
 	setItemAdded(product);
@@ -127,7 +129,6 @@ function setBasketNumber(product) {
 // Sets the product itself 
 function setItemAdded(product) {
 	product.quantity = 0;
-	// console.log(product.quantity += valueSelected);
 
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
@@ -135,20 +136,20 @@ function setItemAdded(product) {
 	if (basketItems != null) {
 		if (basketItems[product.name] == undefined) {
 			basketItems = {
-			...basketItems,
-				[product.name]: product
-			}
+				...basketItems,
+				[product.name]: product,
+			};
 		}
-		basketItems[product.name].quantity += 1;
-		// console.log(basketItems[product.name]);
+		basketItems[product.name].quantity += valueSelected;
 	} else {
-		product.quantity = 1;
+		product.quantity = valueSelected;
 		basketItems = {
-			[product.name]: product
-		}
+			[product.name]: product,
+		};
 	}	
 	localStorage.setItem('basketItems', JSON.stringify(basketItems));	
 }
+
 
 // Sets the total price of items
 function setTotalCost(price) {
@@ -156,11 +157,10 @@ function setTotalCost(price) {
 	let totalCost = localStorage.getItem('totalCost');
 	totalCost = JSON.parse(totalCost);
 	
-	// console.log(totalCost)
 	if (totalCost != null) {
-		localStorage.setItem('totalCost', totalCost += price);
+		localStorage.setItem('totalCost', totalCost += price * valueSelected);
 	} else {
-		localStorage.setItem('totalCost', price);
+		localStorage.setItem('totalCost', price * localStorage.getItem('basketNumber'));
 	}
 }
 
@@ -168,13 +168,11 @@ function setTotalCost(price) {
 // Sets the value of the locaStorage to basket when loading the page
 function onLoadBasketNumber() {
 	
-	let productNumber = localStorage.getItem('basketNumber');
-	if (productNumber) {
-		numItems1.innerText = productNumber ;
-		numItems2.innerText = productNumber;
+	let basketNumber = localStorage.getItem('basketNumber');
+
+	if (basketNumber) {
+		numItems1.innerText = basketNumber;
+		numItems2.innerText = basketNumber;
 	}
 }
 onLoadBasketNumber();
-
-
-// export { basketNumber, onLoadBasketNumber}
