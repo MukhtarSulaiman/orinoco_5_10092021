@@ -35,11 +35,10 @@ function showProduct() {
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
 
-	// console.log(basketItems);
-
 	if (basketItems && row) {
-		// row.innerHTML = "";
+
 		Object.values(basketItems).map(item => {
+			
 			let price =
 				`${item.price}`.substring(0, `${item.price}`.length - 2) +
 				',' + `${item.price}`.substring(`${item.price}`.length - 2);
