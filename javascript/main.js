@@ -1,24 +1,21 @@
+/** @format */
+
 // Retreiving data from the API
 async function fetchData() {
-
-    try {
-        let data = await fetch('http://localhost:3000/api/cameras').then(
-            (response) => response.json());
-            showProductList(data)
-        // console.log(data);
-
-    } catch (err) {
-        document.getElementById('intro')
-            .innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
-        console.log(err);
-    }
-
+	try {
+		let data = await fetch('http://localhost:3000/api/cameras').then(
+			(response) => response.json()
+		);
+		showProductList(data);
+		// console.log(data);
+	} catch (err) {
+		document.getElementById(
+			'intro'
+		).innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
+		console.log(err);
+	}
 }
-fetchData();
 
-
-
-let product_details = document.getElementById('product_details');
 
 let numItems1 = document.querySelector('.numItems1');
 let numItems2 = document.querySelector('.numItems2');
@@ -26,23 +23,35 @@ let numItems2 = document.querySelector('.numItems2');
 numItems1.innerText = localStorage.getItem('basketNumber');
 numItems2.innerText = localStorage.getItem('basketNumber');
 
+let basketNumber = localStorage.getItem('basketNumber');
+
+function onLoadBasketNumber() {
+	let basketNumber = localStorage.getItem('basketNumber');
+
+	if (basketNumber == 0) {
+		numItems1.style.display = 'none';
+		numItems2.style.display = 'none';
+	} else {
+		numItems1.innerText = basketNumber;
+		numItems2.innerText = basketNumber;
+	}
+}
+
 // Hides Items number on the toggler button
 function hideNumItemsOnToggler() {
-
 	if (numItems1 != onblur) {
 		numItems1.style.display = 'none';
 	} else {
 		// has to be reviwed !
 		numItems1.style.display = 'initial !important';
-	}	
-
+	}
 }
-
 
 // Shows all products on the main page
 
 function showProductList(data) {
 
+	let product_details = document.getElementById('product_details');
 	const sub_heading = document.getElementById('sub_heading');
 	sub_heading.innerText = 'Nos produits';
 
@@ -73,9 +82,9 @@ function showProductList(data) {
 
 	let div = document.createElement('div');
 	div.classList.add('col-12', 'col-sm-4');
-    div.style.display = 'flex';
-    div.style.justifyContent = 'center';
-    div.style.alignItems = 'center';
+	div.style.display = 'flex';
+	div.style.justifyContent = 'center';
+	div.style.alignItems = 'center';
 
 	let icon = document.createElement('i');
 	icon.classList.add('bi', 'bi-plus-square-fill');
@@ -86,3 +95,6 @@ function showProductList(data) {
 	div.appendChild(icon);
 	product_details.appendChild(div);
 }
+
+fetchData();
+onLoadBasketNumber();
