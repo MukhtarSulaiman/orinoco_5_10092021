@@ -83,6 +83,7 @@ function customizingElements(product) {
 const numItems1 = document.querySelector('.numItems1');
 const numItems2 = document.querySelector('.numItems2');
 
+// Hides the item number on small screens
 function hideNumItemsOnToggler() {
 
 	if (numItems1 != onblur) {
@@ -147,7 +148,7 @@ function setItemAdded(product) {
 			[product.name]: product,
 		};
 	}	
-	localStorage.setItem('basketItems', JSON.stringify(basketItems));	
+	localStorage.setItem('basketItems', JSON.stringify(basketItems));
 }
 
 
@@ -170,7 +171,10 @@ function onLoadBasketNumber() {
 	
 	let basketNumber = localStorage.getItem('basketNumber');
 
-	if (basketNumber) {
+	if (basketNumber == 0) {
+		numItems1.style.display = 'none';
+		numItems2.style.display = 'none';
+	} else {
 		numItems1.innerText = basketNumber;
 		numItems2.innerText = basketNumber;
 	}
