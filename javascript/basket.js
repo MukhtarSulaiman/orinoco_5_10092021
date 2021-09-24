@@ -150,3 +150,15 @@ function checkInputs() {
 	}
 
 }
+
+function setErrorFor(input, message) {
+	const formGroupe = input.parentElement; //gets form-group class
+	const small = formGroupe.querySelector('.small');
+
+	// Adds error message insife small tag
+	small.innterText = message;
+
+	formGroupe.className = 'form-group error'
+	// console.log(formGroupe)
+
+}
