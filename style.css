@@ -92,8 +92,17 @@ select {
 
 /* Basket page */
 
+.form {
+    max-width: 800px;
+    margin: 6rem auto 4rem;
+}
+
 .form-group {
     margin-bottom: 40px;
+}
+
+label {
+    font-size: 1.3rem;
 }
 
 input {
