@@ -76,6 +76,7 @@ function customizingElements(product) {
 	addItemsToBasket.addEventListener('click', () => {
 		setBasketNumber(product);
 		setTotalCost(product.price);
+		onLoadBasketNumber();
 	});
 }
 
@@ -83,7 +84,7 @@ function customizingElements(product) {
 const numItems1 = document.querySelector('.numItems1');
 const numItems2 = document.querySelector('.numItems2');
 
-// Hides the item number on small screens
+// It's an eventListenr that hides the item number on small screens
 function hideNumItemsOnToggler() {
 
 	if (numItems1 != onblur) {
@@ -113,10 +114,10 @@ function setBasketNumber(product) {
 	productNumber = parseInt(productNumber);
 
 	if (productNumber) {
-			localStorage.setItem('basketNumber', productNumber += valueSelected);
-			numItems1.innerText = productNumber;
-			numItems2.innerText = productNumber;
-		
+		localStorage.setItem('basketNumber', productNumber += valueSelected);
+		numItems1.innerText = productNumber;
+		numItems2.innerText = productNumber;
+	
 	} else {
 		localStorage.setItem('basketNumber', valueSelected);
 			numItems1.innerText = valueSelected;
@@ -170,13 +171,15 @@ function setTotalCost(price) {
 function onLoadBasketNumber() {
 	
 	let basketNumber = localStorage.getItem('basketNumber');
-
+	
 	if (basketNumber == 0) {
 		numItems1.style.display = 'none';
-		numItems2.style.display = 'none';
+		numItems2.style.display = 'none';	
 	} else {
 		numItems1.innerText = basketNumber;
 		numItems2.innerText = basketNumber;
+		numItems1.style.display = 'initial';
+		numItems2.style.display = 'initial';
 	}
 }
 onLoadBasketNumber();
