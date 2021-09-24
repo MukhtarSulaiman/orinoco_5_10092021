@@ -1,8 +1,6 @@
 /** @format */
 
 let productId = new URL(location.href).searchParams.get('id');
-// let rawData = "";
-
 let url = 'http://localhost:3000/api/cameras';
 
 fetch(url + '/' + productId)
@@ -16,14 +14,11 @@ fetch(url + '/' + productId)
 		}
 	})
 	.then((data) => {
-		// rawData = data;
-		
 		setProduct(data);
 	})
 	.catch((error) => {
 		console.log(error);
 	});
-	
 
 const imgContain = document.getElementById('imgContain');
 const productName = document.getElementById('productName');
@@ -70,7 +65,6 @@ function customizingElements(product) {
 	for (let arr of product.lenses) {
 		document.getElementById('lenses').innerHTML += `<option value="${arr}">${arr}</option>`;
 	}
-
 
 
 	addItemsToBasket.addEventListener('click', () => {
