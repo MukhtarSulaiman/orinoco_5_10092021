@@ -116,3 +116,37 @@ function deleteButton() {
 }
 onLoadBasketNumber();
 showProduct();
+
+
+// Form inputs sections
+
+const form = document.getElementById('form')
+const lastName = document.getElementById('lastName');
+const firstName = document.getElementById('firstName');
+const adress = document.getElementById('adress');
+const city = document.getElementById('city');
+const zp = document.getElementById('zp');
+const phone = document.getElementById('phone');
+const email = document.getElementById('email');
+
+form.addEventListener('change', () => {
+
+	checkInputs();
+})
+
+function checkInputs() {
+	// Gets the values form the inputs
+
+	let = lastNameValue = lastName.value.trim();
+	let = firstNameValue = firstName.value.trim();
+	let = adressValue = adress.value.trim();
+	let = cityValue = city.value.trim();
+	let = zpValue = zp.value.trim();
+	let = phoneValue = phone.value.trim();
+	let = emailValue = email.value.trim();
+
+	if (lastName === '') {
+		setErrorFor(lastName, 'Vous devez saisir votre nom !') 
+	}
+
+}
