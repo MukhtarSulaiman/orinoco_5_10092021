@@ -5,7 +5,7 @@ let numItems2 = document.querySelector('.numItems2');
 numItems1.innerText = localStorage.getItem('basketNumber');
 numItems2.innerText = localStorage.getItem('basketNumber');
 
-// Hides number of items when the button is fucosed
+// It's an eventListener that hides number of items when the button is fucosed
 function hideNumItemsOnToggler() {
 	if (numItems1 != onblur) {
 		numItems1.style.display = 'none';
@@ -28,25 +28,23 @@ function onLoadBasketNumber() {
 	}
 }
 
-const row = document.querySelector('.row')
-const tr1 = document.querySelector('.tr1');
-const tr2 = document.querySelector('.tr2');
-const tr3 = document.querySelector('.tr3');
 
 // Set table's components and the remove btn
 function showProduct() {
 
+	let row = document.querySelector('.row');				
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
-
-	let itemId = [];
 		
-	if (basketItems && row) {
+	if (Object.keys(basketItems).length != 0) {
+		
 		Object.values(basketItems).map(item => {
 
 			let price =
 				`${item.price}`.substring(0, `${item.price}`.length - 2) +
 				',' + `${item.price}`.substring(`${item.price}`.length - 2);
+			
+			
 			row.innerHTML +=
 			`<div class="col-12 col-md-3 mt-3 mx-sm-0 mx-0 text-center">
 				<img class="rounded-0" src="${item.imageUrl}" height="112" alt="">
@@ -63,23 +61,22 @@ function showProduct() {
 					</tfoot>
 				</table>
 				<div class="d-flex justify-content-center justify-content-md-end">
-					<button id="removeButton" type="button" class="btn btn-danger p-1 removeButton"> Suprimer<i class="bi bi-trash"></i></button>
+					<button type="button" class="btn btn-danger p-1 removeButton"> Suprimer<i class="bi bi-trash"></i></button>
 				</div>
 			</div>`;
 
-			// itemId.push(item._id);
-			// console.log(itemId);
-			
 		});
-	} else {
+	}
+	
+	let basketNumber = localStorage.getItem('basketNumber');
+	
+	if(!basketNumber || basketNumber == 0) {
 		row.innerHTML = `<h2 class="text-center text-secondary">Votre panier est vide !<a href="index.html" class="text-info"> Retour à l'accueil</a></h2>`;
 	}
-		
 
 	let totalCost = localStorage.getItem('totalCost');
-
 	
-	if (totalCost) {
+	if (totalCost > 0) {
 		totalCost =
 			`${totalCost}`.substring(0, `${totalCost}`.length - 2) +
 			',' +
@@ -91,8 +88,7 @@ function showProduct() {
 		</div>
 		`;
 	}
-	deleteButton(itemId);
-	
+	deleteButton();
 }
 
 
@@ -106,22 +102,15 @@ function deleteButton() {
 	basketItems = JSON.parse(basketItems);
 	let totalCost = localStorage.getItem('totalCost')
 
-	// console.log(basketItems)
-
 	for (let i = 0; i < removeButton.length; i++) {
 		removeButton[i].addEventListener('click', () => {
 			productName = name[i].textContent;
-			// .trim().toLocaleLowerCase().replace(/ /g, '');
-			// console.log(productName);
-			// console.log(basketItems[productName].name + " " + basketItems[productName].quantity)
 			localStorage.setItem('basketNumber', basketNumber - basketItems[productName].quantity);
 			localStorage.setItem('totalCost', totalCost - (basketItems[productName].price * basketItems[productName].quantity));
 			delete basketItems[productName];
 			localStorage.setItem('basketItems', JSON.stringify(basketItems))
 
-			showProduct();
-			onLoadBasketNumber();
-
+			location.reload();
 		});
 	}
 }
