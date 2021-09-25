@@ -123,14 +123,15 @@ showProduct();
 const form = document.getElementById('form')
 const lastName = document.getElementById('lastName');
 const firstName = document.getElementById('firstName');
-const adress = document.getElementById('adress');
+const address = document.getElementById('address');
 const city = document.getElementById('city');
 const zp = document.getElementById('zp');
 const phone = document.getElementById('phone');
 const email = document.getElementById('email');
 
-form.addEventListener('change', () => {
 
+form.addEventListener('change', () => {
+	
 	checkInputs();
 })
 
@@ -139,26 +140,76 @@ function checkInputs() {
 
 	let = lastNameValue = lastName.value.trim();
 	let = firstNameValue = firstName.value.trim();
-	let = adressValue = adress.value.trim();
+	let = adressValue = address.value.trim();
 	let = cityValue = city.value.trim();
 	let = zpValue = zp.value.trim();
 	let = phoneValue = phone.value.trim();
 	let = emailValue = email.value.trim();
 
-	if (lastName === '') {
-		setErrorFor(lastName, 'Vous devez saisir votre nom !') 
+	if (lastNameValue === '') {
+		setErrorFor(lastName, 'Vous devez saisir votre nom !');
+	} else {
+		setSuccessFor(lastName);
+	}
+
+	if (firstNameValue === '') {
+		setErrorFor(firstName, 'Vous devez saisir votre prénom !');
+	} else {
+		setSuccessFor(firstName);
+	}
+
+	if (adressValue === '') {
+		setErrorFor(address, 'Champ est obligatoire !');
+	} else {
+		setSuccessFor(address);
+	}
+
+	if (cityValue === '') {
+		setErrorFor(city, 'Champ est obligatoire !');
+	} else {
+		setSuccessFor(city);
+	}
+
+	if (zpValue === '') {
+		setErrorFor(zp, 'Champ est obligatoire !');
+	} else {
+		setSuccessFor(zp);
+	}
+
+	if (phoneValue === '') {
+		setErrorFor(phone, 'Champ est obligatoire !');
+	} else {
+		setSuccessFor(phone);
+	}
+
+	if (emailValue === '') {
+		setErrorFor(email, 'Champ est obligatoire !');
+	} else if (!isEmail(emailValue)) {
+		setErrorFor(email, 'E-mail n\'est pas valide !');
+	}else {
+		setSuccessFor(email);
 	}
 
 }
 
 function setErrorFor(input, message) {
-	const formGroupe = input.parentElement; //gets form-group class
-	const small = formGroupe.querySelector('.small');
+	const formGroup = input.parentElement; //gets form-group class
+	const small = formGroup.querySelector('small');
 
 	// Adds error message insife small tag
-	small.innterText = message;
-
-	formGroupe.className = 'form-group error'
+	small.innerText = message;
+	formGroup.classList.add('error');
+	formGroup.classList.remove('success')
 	// console.log(formGroupe)
 
+}
+
+function setSuccessFor(input) {
+	const formGroup = input.parentElement; //gets form-group class
+	formGroup.classList.add('success');
+	formGroup.classList.remove('error')
+}
+
+function isEmail(email) {
+	return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
 }
