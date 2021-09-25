@@ -98,7 +98,7 @@ select {
 }
 
 .form-group {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     position: relative;
 }
 
@@ -112,11 +112,9 @@ select {
     padding-left: 10px;
     outline: none;
     border: none;
-    color:#FFF;
     font-size: 1.2rem;
     border-radius: 5px;
     border: 3px solid #6c757d;
-    /* border: 2px solid #2ecc71; */
 }
 
 .form-group ::placeholder {
@@ -134,24 +132,25 @@ select {
 .form-group i {
     position: absolute;
     right: 25px;
-    top: 50%;
+    top: 48px;
+    visibility: hidden;
+    font-size: 25px;
 }
 
-.form-group.success i.bi-check-lg {
-    color: #2ecc71;
+.form-group.success i.bi-check-circle-fill {
     visibility: visible;
+    color: #2ecc71;
 }
 
 .form-group.error i.bi-exclamation-lg {
-    color: #ff8000;
     visibility: visible;
+     color: #ff8000;
 }
 
 .form-group small {
-    font-size: 16px;
-    margin-left: 5px;
     visibility: hidden;
-    
+    font-size: 16px;
+    margin-left: 5px;  
 }
 
 .form-group.error small {
