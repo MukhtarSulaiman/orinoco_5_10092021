@@ -128,14 +128,15 @@ const city = document.getElementById('city');
 const zp = document.getElementById('zp');
 const phone = document.getElementById('phone');
 const email = document.getElementById('email');
+let inputs = document.getElementsByTagName('input')
 
+form.addEventListener('submit', (e) => {
+	e.preventDefault();
+	checkInputs(e);
 
-form.addEventListener('change', () => {
-	
-	checkInputs();
 })
 
-function checkInputs() {
+function checkInputs(e) {
 	// Gets the values form the inputs
 
 	let = lastNameValue = lastName.value.trim();
@@ -190,6 +191,29 @@ function checkInputs() {
 		setSuccessFor(email);
 	}
 
+	if (
+		lastNameValue &&
+		firstNameValue &&
+		adressValue &&
+		cityValue &&
+		zpValue &&
+		phoneValue &&
+		emailValue !== '' &&
+		isEmail(emailValue)
+	) {
+		productId = [];
+		
+		let basketItems = localStorage.getItem('basketItems');
+		basketItems = JSON.parse(basketItems);
+
+		for (let name in basketItems) {
+			productId.push(basketItems[name]._id);
+		}
+		
+		getFormInputDataAndProductId(e, productId);		
+		
+	}
+		
 }
 
 function setErrorFor(input, message) {
@@ -212,4 +236,27 @@ function setSuccessFor(input) {
 
 function isEmail(email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+}
+
+
+function getFormInputDataAndProductId(e, productId) {
+
+	console.log(productId)
+	
+	let myForm = e.target;
+	let contact = new FormData (myForm);
+
+	console.log(contact)
+
+	let url = 'http://localhost:3000/api/cameras/order';
+	fetch(url, {
+		method: 'post',
+		body: JSON.stringify(contact)
+	}).then((response) => {
+		return response.text();
+	}).then((text) => {
+		console.log(text);
+	}).catch((error) => {
+		console.log(error);
+	})
 }
