@@ -59,7 +59,7 @@ function showProduct() {
 					</tfoot>
 				</table>
 				<div class="d-flex justify-content-center justify-content-md-end">
-					<button type="button" class="btn btn-danger p-1 removeButton"> Suprimer<i class="bi bi-trash"></i></button>
+					<button type="button" class="btn btn-danger p-1 removeButton"> Suprimer</button>
 				</div>
 			</div>`;
 			
@@ -83,7 +83,16 @@ function showProduct() {
 			<div class="text-secondary"><h4>Total de la commande :</h4></div>
 			<div class="fs-5 text-info"><p>${totalCost} €</p></div>
 		</div>
+		<div class="text-center mt-5">
+			<button id="removeAllItems" type="button" class="btn btn-danger btn-lg p-1" onclick="clearAllItems()"> Vider le panier <i class="bi bi-trash"></i></button>			
+		</div>
+
 		`;
+		// let removeAllItems = document.querySelector('#removeAllItems');
+		// console.log(removeAllItems);
+		// removeAllItems.addEventListener('click', () => {
+		// 	localStorage.clear();
+		// });
 	}
 	deleteButton();
 }
@@ -116,6 +125,13 @@ function deleteButton() {
 			location.reload();
 		});
 	}
+	
+}
+
+// Removes all items 
+function clearAllItems() {
+	localStorage.clear();
+	location.reload();
 }
 
 // Form inputs sections
@@ -185,7 +201,7 @@ function checkInputs(e) {
 	if (emailValue === '') {
 		setErrorFor(email, 'Champ est obligatoire !');
 	} else if (!isEmail(emailValue)) {
-		setErrorFor(email, "E-mail n'est pas valide !");
+		setErrorFor(email, 'E-mail n\'est pas valide !');
 	} else {
 		setSuccessFor(email);
 	}
@@ -264,7 +280,7 @@ function getFormInputDataAndProductId() {
 		})
 		.then((data) => {
 			let orderId = data.orderId;
-			document.location.href = 'order-confirm.html?id=' + orderId;	
+			document.location.href = 'order-confirm.html?id=' + orderId;
 			
 		})
 		.catch((error) => {
