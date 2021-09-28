@@ -11,7 +11,7 @@ async function fetchData() {
 	} catch (err) {
 		document.getElementById(
 			'intro'
-		).innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
+		).innerHTML = `<div class="alert alert-warning text-center fs-4" role="alert">Oops un problème de serveur ! :(</div>`;
 		console.log(err);
 	}
 }
