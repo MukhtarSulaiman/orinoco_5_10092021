@@ -1,7 +1,7 @@
 /** @format */
 let orderId = new URL(location.href).searchParams.get('id');
 
-// Sets order Id to the confiramtion page
+// Sets the order Id to the confiramtion page
 function assignOrderId() {
 
     if (!localStorage.getItem('basketItems')) {
@@ -37,11 +37,10 @@ function setCurrentDate() {
     let minut = date.getMinutes();
 
     let fullDate = `Le ${day}/${month}/${year} à ${hour}h${minut}`;
-    document.querySelector('#dateOfPurchase').innerText = `Date de commande : ${fullDate}`;
-
-    
+    document.querySelector('#dateOfPurchase').innerText = `Date de commande : ${fullDate}`;  
 
 }
+
 setCurrentDate();
 assignOrderId();
 
