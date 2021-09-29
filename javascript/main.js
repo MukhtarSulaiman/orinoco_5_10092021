@@ -1,4 +1,5 @@
 /** @format */
+import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 // Retreiving data from the API
 async function fetchData() {
@@ -17,38 +18,7 @@ async function fetchData() {
 }
 
 
-let numItems1 = document.querySelector('.numItems1');
-let numItems2 = document.querySelector('.numItems2');
-
-numItems1.innerText = localStorage.getItem('basketNumber');
-numItems2.innerText = localStorage.getItem('basketNumber');
-
-let basketNumber = localStorage.getItem('basketNumber');
-
-function onLoadBasketNumber() {
-	let basketNumber = localStorage.getItem('basketNumber');
-
-	if (basketNumber == 0) {
-		numItems1.style.display = 'none';
-		numItems2.style.display = 'none';
-	} else {
-		numItems1.innerText = basketNumber;
-		numItems2.innerText = basketNumber;
-	}
-}
-
-// Hides Items number on the toggler button
-function hideNumItemsOnToggler() {
-	if (numItems1 != onblur) {
-		numItems1.style.display = 'none';
-	} else {
-		// has to be reviwed !
-		numItems1.style.display = 'initial !important';
-	}
-}
-
 // Shows all products on the main page
-
 function showProductList(data) {
 
 	let product_details = document.getElementById('product_details');
@@ -61,31 +31,27 @@ function showProductList(data) {
 			',' +
 			`${data[i].price}`.substring(`${data[i].price}`.length - 2);
 
-		product_details.innerHTML += `
-         <div class="col-12 col-sm-4 column">
-            <a id="product_details" href="product.html?id=${data[i]._id}">
-                <img id="product_img" src="${
-					data[i].imageUrl
-				}" class="card-img-top img-thumbnail" alt="Image de produit">
-                <div class="card-body text-secondary mb-4">
-                    <h3 id="product_name" class="card-title">${
-					data[i].name
-				}</h3>
-                    <span id="product_price">Prix :${
-					' ' + floatingPointNum + ' '
-				}€</span>
-                    <button class="btn btn-primary btn-sm float-end details-btn">Voir le produit</button>
-                </div>
-            </a>
-        </div>`;
+		product_details.innerHTML +=
+			` <div class="col-12 col-sm-4 column">
+				<a id="product_details" href="product.html?id=${data[i]._id}">
+					<img id="product_img" src="${data[i].imageUrl}" class="card-img-top img-thumbnail" alt="Image de produit">
+					<div class="card-body text-secondary mb-4">
+						<h3 id="product_name" class="card-title">${data[i].name}</h3>
+						<span id="product_price">Prix :${' ' + floatingPointNum + ' '}€</span>
+						<button class="btn btn-primary btn-sm float-end details-btn">Voir le produit</button>
+					</div>
+				</a>
+			</div>`;
 	}
 
+	// It creates a parent div to hold the square-fill icon
 	let div = document.createElement('div');
 	div.classList.add('col-12', 'col-sm-4');
 	div.style.display = 'flex';
 	div.style.justifyContent = 'center';
 	div.style.alignItems = 'center';
 
+	// It creates the square-fill icon to that represent a placeholder for more products to come
 	let icon = document.createElement('i');
 	icon.classList.add('bi', 'bi-plus-square-fill');
 	icon.setAttribute('id', product_name);
@@ -98,3 +64,4 @@ function showProductList(data) {
 
 fetchData();
 onLoadBasketNumber();
+hideNumItemsOnToggler();

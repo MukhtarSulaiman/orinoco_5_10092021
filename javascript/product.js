@@ -1,16 +1,16 @@
 /** @format */
+import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 let productId = new URL(location.href).searchParams.get('id');
 let url = 'http://localhost:3000/api/cameras';
-
+// Returns on object that contains product's details
 fetch(url + '/' + productId)
 	.then((response) => {
 		if (response.ok) {
 			return response.json();
 		} else {
-			document.getElementById(
-				'main'
-			).innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
+			document.getElementById('main')
+				.innerHTML = `<div class="alert alert-warning text-center" role="alert">Oops un problème de serveur :( ! <a href="index.html" class="alert-link">Retournez à la page d'accueil </a>.</div>`;
 		}
 	})
 	.then((data) => {
@@ -18,7 +18,8 @@ fetch(url + '/' + productId)
 	})
 	.catch((error) => {
 		console.log(error);
-	});
+	}
+);
 
 const imgContain = document.getElementById('imgContain');
 const productName = document.getElementById('productName');
@@ -52,11 +53,11 @@ const lensesTitle = document.getElementById('lensesTitle');
 const quantity = document.getElementById('quantity');
 const addItemsToBasket = document.querySelector('.addItemsToBasket');
 
-
+//Define the customization elements 
 function customizingElements(product) {
 	quantityTitle.innerText = 'Quantité :';
 	lensesTitle.innerText = 'Lentille :';
-	addItemsToBasket.innerText = 'Ajouter au pannier';
+	addItemsToBasket.innerText = 'Ajouter au panier';
 
 	for (let i = 1; i < 11; i++) {
 		quantity.innerHTML += `<option value="${i}">${i}</option>`;
@@ -66,46 +67,29 @@ function customizingElements(product) {
 		document.getElementById('lenses').innerHTML += `<option value="${arr}">${arr}</option>`;
 	}
 
-
 	addItemsToBasket.addEventListener('click', () => {
 		setBasketNumber(product);
+		setItemAdded(product);
 		setTotalCost(product.price);
-		onLoadBasketNumber();
 	});
 }
 
 
-const numItems1 = document.querySelector('.numItems1');
-const numItems2 = document.querySelector('.numItems2');
-
-// It's an eventListenr that hides the item number on small screens
-function hideNumItemsOnToggler() {
-
-	if (numItems1 != onblur) {
-		numItems1.style.display = 'none';
-	} else {
-		// has to be reviwed !
-		numItems1.style.display = 'initial !important';
-	}	
-}
-
-
 let valueSelected = 1;
-
 // It's an eventListenr that gets the value of a selected option
-function getOptionValue(event) {
-
+window.getOptionValue = function () {
 	valueSelected = quantity.value;
 	valueSelected = parseInt(valueSelected);
 }
 
+// Sets the intial value of the items number in the locaStrage 
+// It displays the selected items on the page without refreshing the page
+function setBasketNumber() {
 
-// Sets the intial value of locaStrage 
-// Shows the number of available items on the header 
-function setBasketNumber(product) {
-
+	let numItems1 = document.querySelector('.numItems1');
+	let numItems2 = document.querySelector('.numItems2');
 	let productNumber = localStorage.getItem('basketNumber');
-	productNumber = parseInt(productNumber);
+		productNumber = parseInt(productNumber);
 
 	if (productNumber) {
 		localStorage.setItem('basketNumber', productNumber += valueSelected);
@@ -114,20 +98,17 @@ function setBasketNumber(product) {
 	
 	} else {
 		localStorage.setItem('basketNumber', valueSelected);
-			numItems1.innerText = valueSelected;
-			numItems2.innerText = valueSelected;
+		numItems1.innerText = valueSelected;
+		numItems2.innerText = valueSelected;
 	}
-
-	setItemAdded(product);
 }
-
 
 // Sets the product itself 
 function setItemAdded(product) {
 	product.quantity = 0;
 
 	let basketItems = localStorage.getItem('basketItems');
-	basketItems = JSON.parse(basketItems);
+		basketItems = JSON.parse(basketItems);
 
 	if (basketItems != null) {
 		if (basketItems[product.name] == undefined) {
@@ -151,7 +132,7 @@ function setItemAdded(product) {
 function setTotalCost(price) {
 	
 	let totalCost = localStorage.getItem('totalCost');
-	totalCost = JSON.parse(totalCost);
+		totalCost = JSON.parse(totalCost);
 	
 	if (totalCost != null) {
 		localStorage.setItem('totalCost', totalCost += price * valueSelected);
@@ -160,20 +141,5 @@ function setTotalCost(price) {
 	}
 }
 
-
-// Sets the value of the locaStorage to basket when loading the page
-function onLoadBasketNumber() {
-	
-	let basketNumber = localStorage.getItem('basketNumber');
-	
-	if (basketNumber == 0) {
-		numItems1.style.display = 'none';
-		numItems2.style.display = 'none';	
-	} else {
-		numItems1.innerText = basketNumber;
-		numItems2.innerText = basketNumber;
-		numItems1.style.display = 'initial';
-		numItems2.style.display = 'initial';
-	}
-}
 onLoadBasketNumber();
+hideNumItemsOnToggler();

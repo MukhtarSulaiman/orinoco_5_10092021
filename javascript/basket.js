@@ -1,34 +1,9 @@
 /** @format */
-
-let numItems1 = document.querySelector('.numItems1');
-let numItems2 = document.querySelector('.numItems2');
-numItems1.innerText = localStorage.getItem('basketNumber');
-numItems2.innerText = localStorage.getItem('basketNumber');
-
-// It's an eventListener that hides number of items when the button is fucosed
-function hideNumItemsOnToggler() {
-	if (numItems1 != onblur) {
-		numItems1.style.display = 'none';
-	} else {
-		// has to be reviwed !
-		numItems1.style.display = 'initial !important';
-	}
-}
-
-function onLoadBasketNumber() {
-	let basketNumber = localStorage.getItem('basketNumber');
-
-	if (basketNumber == 0) {
-		numItems1.style.display = 'none';
-		numItems2.style.display = 'none';
-	} else {
-		numItems1.innerText = basketNumber;
-		numItems2.innerText = basketNumber;
-	}
-}
+import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 // Set table's components and the remove btn
 function showProduct() {
+
 	let display_product = document.querySelector('.display_product');
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
@@ -40,7 +15,8 @@ function showProduct() {
 				',' +
 				`${item.price}`.substring(`${item.price}`.length - 2);
 
-			display_product.innerHTML += `<div class="col-12 col-md-3 mt-3 mx-sm-0 mx-0 text-center">
+			display_product.innerHTML +=
+			`<div class="col-12 col-md-3 mt-3 mx-sm-0 mx-0 text-center">
 				<img class="rounded-0" src="${item.imageUrl}" height="112" alt="">
 			</div>
 			<div class="col-12 col-md-9 my-4 mt-md-0">
@@ -49,20 +25,15 @@ function showProduct() {
 						<tr><th scope="col">Nom</th><th scope="col">Quantité</th><th scope="col">Prix</th><th scope="col">Lentille</th> </tr>
 					</thead>
 					<tbody>
-						<tr><td class="name">${item.name}</td><td>${
-				item.quantity
-			}</td><td>${price} €</td><td>${item.lenses[0]}</td></tr>
+						<tr><td class="name">${item.name}</td><td>${item.quantity}</td><td>${price} €</td><td>${item.lenses[0]}</td></tr>
 					<tfoot>
-						<tr><td class="text-info">Total</td><td></td><td></td><td class="text-info">${
-							item.quantity * parseInt(price)
-						},00 €</td></tr>
+						<tr><td class="text-info">Total</td><td></td><td></td><td class="text-info">${item.quantity * parseInt(price)},00 €</td></tr>
 					</tfoot>
 				</table>
 				<div class="d-flex justify-content-center justify-content-md-end">
-					<button type="button" class="btn btn-danger p-1 removeButton"> Suprimer</button>
+					<button type="button" class="btn btn-danger p-1 removeButton"> Supprimer</button>
 				</div>
-			</div>`;
-			
+			</div>`;		
 		});
 	}
 
@@ -84,15 +55,8 @@ function showProduct() {
 			<div class="fs-5 text-info"><p>${totalCost} €</p></div>
 		</div>
 		<div class="text-center mt-5">
-			<button id="removeAllItems" type="button" class="btn btn-danger btn-lg p-1" onclick="clearAllItems()"> Vider le panier <i class="bi bi-trash"></i></button>			
-		</div>
-
-		`;
-		// let removeAllItems = document.querySelector('#removeAllItems');
-		// console.log(removeAllItems);
-		// removeAllItems.addEventListener('click', () => {
-		// 	localStorage.clear();
-		// });
+			<button type="button" class="btn btn-danger btn-lg p-1" onclick="clearAllItems()"> Vider le panier <i class="bi bi-trash"></i></button>			
+		</div>`;
 	}
 	deleteButton();
 }
@@ -125,14 +89,14 @@ function deleteButton() {
 			location.reload();
 		});
 	}
-	
 }
 
 // Removes all items 
-function clearAllItems() {
+window.clearAllItems = function () {
 	localStorage.clear();
 	location.reload();
 }
+
 
 // Form inputs sections
 
@@ -144,7 +108,6 @@ const city = document.getElementById('city');
 const zp = document.getElementById('zp');
 const phone = document.getElementById('phone');
 const email = document.getElementById('email');
-// let inputs = document.getElementsByTagName('input')
 
 form.addEventListener('submit', (e) => {
 	e.preventDefault();
@@ -242,7 +205,7 @@ function isEmail(email) {
 }
 
 function getFormInputDataAndProductId() {
-	productId = [];
+	let productId = [];
 
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
@@ -301,5 +264,6 @@ function displayFormContact() {
 }
 
 onLoadBasketNumber();
+hideNumItemsOnToggler();
 showProduct();
 displayFormContact();
