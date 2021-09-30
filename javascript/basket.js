@@ -3,7 +3,7 @@ import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 // Set table's components and the remove btn
 function showProduct() {
-
+	
 	let display_product = document.querySelector('.display_product');
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
@@ -33,7 +33,7 @@ function showProduct() {
 				<div class="d-flex justify-content-center justify-content-md-end">
 					<button type="button" class="btn btn-danger p-1 removeButton"> Supprimer</button>
 				</div>
-			</div>`;		
+			</div>`;
 		});
 	}
 
@@ -91,12 +91,11 @@ function deleteButton() {
 	}
 }
 
-// Removes all items 
+// Removes all items
 window.clearAllItems = function () {
 	localStorage.clear();
 	location.reload();
-}
-
+};
 
 // Form inputs sections
 
@@ -119,7 +118,7 @@ function checkInputs(e) {
 
 	let lastNameValue = lastName.value.trim();
 	let firstNameValue = firstName.value.trim();
-	let adressValue = address.value.trim();
+	let addressValue = address.value.trim();
 	let cityValue = city.value.trim();
 	let zpValue = zp.value.trim();
 	let phoneValue = phone.value.trim();
@@ -128,9 +127,11 @@ function checkInputs(e) {
 	if (lastNameValue === '') {
 		setErrorFor(lastName, 'Vous devez saisir votre nom !');
 	} else if (!isLetters(lastNameValue)) {
-		setErrorFor(lastName, 'Nom doit uniquement containir des lettres !');
+		setErrorFor(lastName, 'Nom doit uniquement contenir des lettres !');
+	} else if (lastNameValue[0] !== lastNameValue[0].toUpperCase()) {
+		setErrorFor(lastName,'Première lettre doit commercer par majuscle !');
 	} else if (lastNameValue.length < 3) {
-		setErrorFor(lastName, 'Nom doit containir au moins 3 lettres !');
+		setErrorFor(lastName, 'Nom doit contenir au moins 3 lettres !');
 	} else {
 		setSuccessFor(lastName);
 	}
@@ -138,37 +139,48 @@ function checkInputs(e) {
 	if (firstNameValue === '') {
 		setErrorFor(firstName, 'Vous devez saisir votre prénom !');
 	} else if (!isLetters(firstNameValue)) {
-		setErrorFor(firstName,'Prénom doit uniquement containir des lettres !');
+		setErrorFor(firstName,'Prénom doit uniquement contenir des lettres !');
+	} else if (firstNameValue[0] !== firstNameValue[0].toUpperCase()) {
+		setErrorFor(firstName,'Première lettre doit commercer par majuscle !'
+		);
 	} else if (firstNameValue.length < 3) {
-		setErrorFor(firstName, 'Prénom doit containir au moins 3 lettres !');
+		setErrorFor(firstName, 'Prénom doit contenir au moins 3 lettres !');
 	} else {
 		setSuccessFor(firstName);
 	}
 
-	if (adressValue === '') {
+	if (addressValue === '') {
 		setErrorFor(address, 'Champ est obligatoire !');
-	} else {
+	} else if (!isAddress(addressValue)) {
+		setErrorFor(address, 'Saisir au moins 2 chiffres et 15 lettres! !');
+	}else {
 		setSuccessFor(address);
 	}
 
 	if (cityValue === '') {
 		setErrorFor(city, 'Champ est obligatoire !');
 	} else if (!isLetters(cityValue)) {
-		setErrorFor(city, 'Ville doit uniquement containir des lettres !');
+		setErrorFor(city, 'Ville doit uniquement contenir des lettres !');
+	} else if (cityValue[0] !== cityValue[0].toUpperCase()) {
+		setErrorFor(city, 'Première lettre doit commercer par majuscle !');
 	} else if (cityValue.length < 3) {
-		setErrorFor(city, 'Ville doit containir au moins 3 lettres !');
+		setErrorFor(city, 'Ville doit contenir au moins 3 lettres !');
 	} else {
 		setSuccessFor(city);
 	}
 
 	if (zpValue === '') {
 		setErrorFor(zp, 'Champ est obligatoire !');
+	} else if (!isNumber(zpValue)) {
+		setErrorFor(zp, 'Saisir au moins 5 chiffres!');
 	} else {
 		setSuccessFor(zp);
 	}
 
 	if (phoneValue === '') {
 		setErrorFor(phone, 'Champ est obligatoire !');
+	} else if (phoneValue.length < 10) {
+		setErrorFor(phone, 'Saisir au moins 10 chiffres!');
 	} else {
 		setSuccessFor(phone);
 	}
@@ -176,7 +188,7 @@ function checkInputs(e) {
 	if (emailValue === '') {
 		setErrorFor(email, 'Champ est obligatoire !');
 	} else if (!isEmail(emailValue)) {
-		setErrorFor(email, 'E-mail n\'est pas valide !');
+		setErrorFor(email, "E-mail n'est pas valide !");
 	} else {
 		setSuccessFor(email);
 	}
@@ -184,12 +196,22 @@ function checkInputs(e) {
 	if (
 		lastNameValue &&
 		firstNameValue &&
-		adressValue &&
+		addressValue &&
 		cityValue &&
 		zpValue &&
 		phoneValue &&
 		emailValue !== '' &&
-		isEmail(emailValue)
+		isLetters(lastNameValue) &&
+		isLetters(firstNameValue) &&
+		isAddress(addressValue) &&
+		isNumber(zpValue) &&
+		isEmail(emailValue) &&
+		lastNameValue[0] === lastNameValue[0].toUpperCase() &&
+		firstNameValue[0] === firstNameValue[0].toUpperCase() &&
+		cityValue[0] === cityValue[0].toUpperCase() &&
+		lastNameValue.length >= 3 &&
+		firstNameValue.length >= 3 &&
+		cityValue.length >= 3
 	) {
 		getFormInputDataAndProductId(e);
 	}
@@ -212,13 +234,23 @@ function setSuccessFor(input) {
 	formGroup.classList.remove('error');
 }
 
-function isLetters(name) {
-	return /[a-zA-Z]/.test(name);
+
+function isLetters(letter) {
+	return /[a-zA-Z-âãäåæçèéêëìíîïðñòóôõøùúûüýþÿı]/.test(letter);
+}
+
+function isAddress(address) {
+	return /[0-9,\s]{3,}\s[a-zA-Za-zA-Z-âãäåæçèéêëìíîïðñòóôõøùúûüýþÿı,\s]{16,}/.test(address);
+}
+
+function isNumber(number) {
+	return /[0-9]{5,}/.test(number);
 }
 
 function isEmail(email) {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
 }
+
 
 function getFormInputDataAndProductId() {
 	let productId = [];
@@ -260,23 +292,20 @@ function getFormInputDataAndProductId() {
 		.then((data) => {
 			let orderId = data.orderId;
 			document.location.href = 'order-confirm.html?id=' + orderId;
-			
 		})
 		.catch((error) => {
 			console.log(error);
 		});
 }
 
-
 // Display form contact if there's any item in the basket
 function displayFormContact() {
-
 	let display_form_contact = document.querySelector('.display_form_contact');
 	display_form_contact.style.display = 'none';
 
 	if (localStorage.getItem('basketNumber') > 0) {
 		display_form_contact.style.display = 'block';
-	}	
+	}
 }
 
 onLoadBasketNumber();
