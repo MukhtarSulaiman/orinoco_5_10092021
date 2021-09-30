@@ -3,7 +3,7 @@ import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 // Set table's components and the remove btn
 function showProduct() {
-	
+
 	let display_product = document.querySelector('.display_product');
 	let basketItems = localStorage.getItem('basketItems');
 	basketItems = JSON.parse(basketItems);
@@ -240,7 +240,7 @@ function isLetters(letter) {
 }
 
 function isAddress(address) {
-	return /[0-9,\s]{3,}\s[a-zA-Za-zA-Z-âãäåæçèéêëìíîïðñòóôõøùúûüýþÿı,\s]{16,}/.test(address);
+	return /[0-9\s]{2,}[,]{0,}\s[a-zA-Za-zA-Z-âãäåæçèéêëìíîïðñòóôõøùúûüýþÿı,\s]{16,}/i.test(address);
 }
 
 function isNumber(number) {
