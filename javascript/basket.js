@@ -127,12 +127,20 @@ function checkInputs(e) {
 
 	if (lastNameValue === '') {
 		setErrorFor(lastName, 'Vous devez saisir votre nom !');
+	} else if (!isLetters(lastNameValue)) {
+		setErrorFor(lastName, 'Nom doit uniquement containir des lettres !');
+	} else if (lastNameValue.length < 3) {
+		setErrorFor(lastName, 'Nom doit containir au moins 3 lettres !');
 	} else {
 		setSuccessFor(lastName);
 	}
 
 	if (firstNameValue === '') {
 		setErrorFor(firstName, 'Vous devez saisir votre prénom !');
+	} else if (!isLetters(firstNameValue)) {
+		setErrorFor(firstName,'Prénom doit uniquement containir des lettres !');
+	} else if (firstNameValue.length < 3) {
+		setErrorFor(firstName, 'Prénom doit containir au moins 3 lettres !');
 	} else {
 		setSuccessFor(firstName);
 	}
@@ -145,6 +153,10 @@ function checkInputs(e) {
 
 	if (cityValue === '') {
 		setErrorFor(city, 'Champ est obligatoire !');
+	} else if (!isLetters(cityValue)) {
+		setErrorFor(city, 'Ville doit uniquement containir des lettres !');
+	} else if (cityValue.length < 3) {
+		setErrorFor(city, 'Ville doit containir au moins 3 lettres !');
 	} else {
 		setSuccessFor(city);
 	}
@@ -198,6 +210,10 @@ function setSuccessFor(input) {
 	const formGroup = input.parentElement; //gets form-group class
 	formGroup.classList.add('success');
 	formGroup.classList.remove('error');
+}
+
+function isLetters(name) {
+	return /[a-zA-Z]/.test(name);
 }
 
 function isEmail(email) {
