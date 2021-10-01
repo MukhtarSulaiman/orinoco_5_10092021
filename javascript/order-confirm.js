@@ -2,7 +2,7 @@
 let orderId = new URL(location.href).searchParams.get('id');
 
 // Sets the order Id to the confiramtion page
-function assignOrderId() {
+function assignOrderInfo() {
 
     if (!localStorage.getItem('basketItems')) {
         document.querySelector('.order-confirm-container')
@@ -41,6 +41,5 @@ function setCurrentDate() {
 
 }
 
+assignOrderInfo();
 setCurrentDate();
-assignOrderId();
-
