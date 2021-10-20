@@ -211,7 +211,8 @@ function checkInputs(e) {
 		cityValue[0] === cityValue[0].toUpperCase() &&
 		lastNameValue.length >= 3 &&
 		firstNameValue.length >= 3 &&
-		cityValue.length >= 3
+		cityValue.length >= 3 &&
+		phoneValue.length >= 10
 	) {
 		getFormInputDataAndProductId(e);
 	}
