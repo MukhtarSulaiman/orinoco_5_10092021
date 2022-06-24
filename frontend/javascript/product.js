@@ -3,7 +3,7 @@ import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 let productId = new URL(location.href).searchParams.get('id');
 let url = 'http://localhost:3000/api/cameras';
-// Returns on object that contains product's details
+// Returns an object that contains product's details
 fetch(url + '/' + productId)
 	.then((response) => {
 		if (response.ok) {
@@ -31,7 +31,7 @@ function setProduct(product) {
 
 	let img = document.createElement('img');
 	img.src = `${product.imageUrl}`;
-	img.classList.add('img-thumbnail', 'h-100', 'h-rounded-0');
+	img.classList.add('img-thumbnail', 'auto', 'h-rounded-0');
 	imgContain.appendChild(img);
 
 	productName.innerText = `${product.name}`;
@@ -122,7 +122,7 @@ function setItemAdded(product) {
 		product.quantity = valueSelected;
 		basketItems = {
 			[product.name]: product,
-		};
+		}; 
 	}	
 	localStorage.setItem('basketItems', JSON.stringify(basketItems));
 }

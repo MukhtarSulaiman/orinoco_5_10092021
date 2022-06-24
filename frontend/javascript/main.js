@@ -51,7 +51,7 @@ function showProductList(data) {
 	div.style.justifyContent = 'center';
 	div.style.alignItems = 'center';
 
-	// It creates the square-fill icon to that represent a placeholder for more products to come
+	// It creates the square-fill icon that represent a placeholder for more products to come
 	let icon = document.createElement('i');
 	icon.classList.add('bi', 'bi-plus-square-fill');
 	icon.setAttribute('id', product_name);
