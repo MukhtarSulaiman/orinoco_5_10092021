@@ -2,7 +2,7 @@
 import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 
 let productId = new URL(location.href).searchParams.get('id');
-let url = 'http://localhost:3000/api/cameras';
+let url = 'https://mukhtars-orinoco.herokuapp.com/api/cameras';
 // Returns an object that contains product's details
 fetch(url + '/' + productId)
 	.then((response) => {
