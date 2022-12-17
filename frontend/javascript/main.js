@@ -4,7 +4,7 @@ import { onLoadBasketNumber, hideNumItemsOnToggler } from './util.js';
 // Retreiving data from the API
 async function fetchData() {
 	try {
-		let data = await fetch('https://mukhtars-orinoco.herokuapp.com/api/cameras').then(
+		let data = await fetch('https://orinoco.onrender.com/api/cameras').then(
 			(response) => response.json()
 		);
 		showProductList(data);

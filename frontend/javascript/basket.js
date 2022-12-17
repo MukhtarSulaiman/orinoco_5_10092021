@@ -278,7 +278,7 @@ function getFormInputDataAndProductId() {
 		products: productId,
 	};
 
-	let url = 'https://mukhtars-orinoco.herokuapp.com/api/cameras/order';
+	let url = 'https://orinoco.onrender.com/api/cameras/order';
 
 	fetch(url, {
 		method: 'POST',
